@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: url('sakura_background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Noto Serif TC', serif;
+  }
+
+  .grid {
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(3, 120px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 2px;
+    padding: 20px;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .card {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    perspective: 1000px;
+    cursor: pointer;
+    display: flex;
+  }
+
+  .card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 1.2s ease-in-out;
+    transform-style: preserve-3d;
+    position: relative;
+    transform-origin: center center;
+  }
+
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0;
+  }
+
+  .card-front {
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 2;
+  }
+
+  .card:hover .card-front {
+    box-shadow: 0 0 6px rgba(255, 192, 203, 0.25);
+  }
+
+  .card-back {
+    background-color: rgba(255, 255, 255, 0.85);
+    transform: rotateY(180deg);
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 6px;
+    color: #111;
+    z-index: 1;
+    white-space: pre-line;
+  }
+
+  #audioControl {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.85);
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+</style>
+</head>
+<body onclick="startAudio()">
+
+<div class="grid">
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">尋一顆飄雪</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">讓你掛於星空</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">悠悠地用愛</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">照遍天下情夢</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">求一世歲月</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">最美的一分鐘</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">你我也擁抱
+一起</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">飛蹤</div></div></div>
+  <div class="card" onclick="toggleFlip(this)"><div class="card-inner"><div class="card-front"></div><div class="card-back">《風花雪》
+陳慧琳</div></div></div>
+</div>
+
+<audio id="bgAudio" loop>
+  <source src="fungfasyut.mp3" type="audio/mpeg">
+</audio>
+<div id="audioControl" onclick="toggleAudio(event)">🔈</div>
+
+<script>
+  const audio = document.getElementById('bgAudio');
+  const control = document.getElementById('audioControl');
+  let hasStarted = false;
+
+  function startAudio() {
+    if (!hasStarted) {
+      audio.play();
+      hasStarted = true;
+    }
+  }
+
+  function toggleAudio(event) {
+    event.stopPropagation();
+    if (audio.paused) {
+      audio.play();
+      control.innerText = '🔈';
+    } else {
+      audio.pause();
+      control.innerText = '🔇';
+    }
+  }
+
+  function toggleFlip(card) {
+    card.classList.toggle("flipped");
+  }
+</script>
+
+</body>
+</html>
